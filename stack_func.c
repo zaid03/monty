@@ -1,40 +1,40 @@
 #include "monty.h"
 /**
- * _push - pushes into stock int
- * @stock: lists linked for monty stock
- * @ligne_nombre: how man times opcode happens
+ * _push - stack reveives an int
+ * @stack: stack's monty linked list
+ * @line_number: times opcode happens
  */
-void _push(stock_t **stock, __attribute__ ((unused))unsigned int ligne_nombre)
+void _push(stack_t **stack, __attribute__ ((unused))unsigned int line_number)
 {
-	stock_t *top;
-	(void)ligne_nombre;
+	stack_t *top;
+	(void)line_number;
 
-	top = malloc(sizeof(stock_t));
-	if (top == NULL)
+	top = malloc(sizeof(stack_t));
+	if (top == 0)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 
 	top->n = var_global.push_arg;
-	top->next = *stock;
-	top->prev = NULL;
-	if (*stock != NULL)
-		(*stock)->prev = top;
-	*stock = top;
+	top->next = *stack;
+	top->prev = 0;
+	if (*stack != 0)
+		(*stack)->prev = top;
+	*stack = top;
 }
 
 /**
- * _pall - print functions
- * @stock: linked list stack pointer
- * @ligne_nombre: times opcode happens
+ * _pall - to print function
+ * @stack: linked list stack's pointer
+ * @line_number: times opcode happens
  */
-void _pall(stock_t **stock, __attribute__ ((unused))unsigned int ligne_nombre)
+void _pall(stack_t **stack, __attribute__ ((unused))unsigned int line_number)
 {
-	stock_t *runner;
+	stack_t *runner;
 
-	runner = *stock;
-	while (runner != NULL)
+	runner = *stack;
+	while (runner != 0)
 	{
 		printf("%d\n", runner->n);
 		runner = runner->next;
@@ -42,55 +42,55 @@ void _pall(stock_t **stock, __attribute__ ((unused))unsigned int ligne_nombre)
 }
 
 /**
- * _print - top of stack int
- * @stock: pointer to linked list stack
- * @ligne_nombre: times of lineopcode happens
+ * _pint - prints integer into the top pointer
+ * @stack: linked list pointer
+ * @line_number: times opcode happens
  *
  */
-void _print(stock_t **stock, unsigned int ligne_nombre)
+void _pint(stack_t **stack, unsigned int line_number)
 {
-	stock_t *runner;
+	stack_t *runner;
 
-	runner = *stok;
-	if (runner == NULL)
+	runner = *stack;
+	if (runner == 0)
 	{
-		fprintf(stderr, "L%d: can't pint, stack empty\n", ligne_nombre);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", runner->n);
 }
 
 /**
- * _pop - removes list element
- *@stock: first node pointer
- *@ligne_nombre: int
+ * _pop - removes element from lists
+ *@stack: first node's pointer
+ *@line_number: int
  *Return: void
  */
-void _pop(stock_t **stok, unsigned int ligne_nombre)
+void _pop(stack_t **stack, unsigned int line_number)
 {
-	stock_t *nodo = *stock;
+	stack_t *nodo = *stack;
 
-	if (stock == NULL || *stock == NULL)
+	if (stack == 0 || *stack == 0)
 	{
-		fprintf(stderr, "L%d: can't pop an empty stock\n", ligne_nombre);
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	*stock = nodo->next;
-	if (*stock != NULL)
-		(*stock)->prev = NULL;
+	*stack = nodo->next;
+	if (*stack != 0)
+		(*stack)->prev = 0;
 	free(nodo);
 }
 
 /**
- * free_dlistint - list freeing
- * @head: first node pointer
+ * free_dlistint - fereeing lists
+ * @head: first node's pointer
  *
  */
 void free_dlistint(stack_t *head)
 {
-	stock_t *tmp;
+	stack_t *tmp;
 
-	while (head != NULL)
+	while (head != 0)
 	{
 		tmp = head->next;
 		free(head);

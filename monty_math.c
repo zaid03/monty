@@ -1,18 +1,18 @@
 #include "monty.h"
 
 /**
- * _sub - subrine top stack and second top
- * @stock: monty stack's pointer to lists
- * @line_number: number of line opcode occurs on
+ * _sub - sub stack's top and second top
+ * @stack: monty lists pointer
+ * @line_number: times that line opcode happens
  */
-void _sub(stock_t **stock, unsigned int ligne_nombre)
+void _sub(stack_t **stack, unsigned int line_number)
 {
-	stock_t *tmp = *stock;
-	int subrine = 0, i = 0;
+	stack_t *tmp = *stack;
+	int sub = 0, i = 0;
 
-	if (tmp == NULL)
+	if (tmp == 0)
 	{
-		fprintf(stderr, "L%d: can't subrine, stock too short\n", ligne_nombre);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
@@ -22,104 +22,105 @@ void _sub(stock_t **stock, unsigned int ligne_nombre)
 		i++;
 	}
 
-	if (stock == NULL || (*stock)->next == NULL || i <= 1)
+	if (stack == 0 || (*stack)->next == 0 || i <= 1)
 	{
-		fprintf(stderr, "L%d: can't subrine, stock too short\n", ligne_nombre);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	subrine = (*stock)->next->n - (*stock)->n;
-	_pop(stock, ligne_nombre);
+	sub = (*stack)->next->n - (*stack)->n;
+	_pop(stack, line_number);
 
-	(*stock)->n = subrine;
+	(*stack)->n = sub;
 }
 
 /**
- * _mul - mule top stack and second top
- * @stock: monty stack's pointer to lists
- * @ligne_nombre: number of line opcode occurs on
+ * _mul - mul stack's top and second top
+ * @stack: monty lists pointer
+ * @line_number: times that line opcode happens
  */
-void _mul(stock_t **stock, unsigned int ligne_nombre)
+void _mul(stack_t **stack, unsigned int line_number)
 {
 	int aux;
 
-	if (*stock == NULL || (*stock)->next == NULL)
+	if (*stack == 0 || (*stack)->next == 0)
 	{
-		fprintf(stderr, "L%d: can't mul, stock too short\n", ligne_nombre);
+		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
 		free(var_global.buffer);
 		fclose(var_global.file);
-		free_dlistint(*stock);
+		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		aux = (*stock)->n;
-		_pop(stock, ligne_nombre);
-		(*stock)->n *= aux;
+		aux = (*stack)->n;
+		_pop(stack, line_number);
+		(*stack)->n *= aux;
 	}
 }
 
 /**
- * _div - div top stack and second top
- * @stock: pointer to lists for monty stack
- * @ligne_nombre: number of line opcode occurs on
+ * _div - div stack's top and second top
+ * @stack: monty lists pointer
+ * @line_number: times that line opcode happens
  */
-void _div(stack_t **stock, unsigned int ligne_nombre)
+void _div(stack_t **stack, unsigned int line_number)
 {
 	int div = 0;
 
-	if (*stock == NULL || (*stock)->next == NULL)
+	if (*stack == 0 || (*stack)->next == 0)
 	{
-		fprintf(stderr, "L%u: can't div, stock too short\n", ligne_nombre);
+		fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
 		free(var_global.buffer);
 		fclose(var_global.file);
-		free_dlistint(*stock);
+		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
-	else if ((*stock)->n == 0)
+	else if ((*stack)->n == 0)
 	{
-		fprintf(stderr, "L%d: division by zero\n", ligne_nombre);
+		fprintf(stderr, "L%d: division by zero\n", line_number);
 		free(var_global.buffer);
 		fclose(var_global.file);
-		free_dlistint(*stock);
+		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
+		
 	}
 	else
 	{
-		div = (*stock)->n;
-		_pop(stock, ligne_nombre);
-		(*stock)->n /= div;
+		div = (*stack)->n;
+		_pop(stack, line_number);
+		(*stack)->n /= div;
 	}
 }
 
 /**
- * _mod - mod top stack and second top
- * @stock: monty stack's pointer to lists
- * @ligne_nombre: number of line opcode occurs on
+ * _mod - mod stack's top and second top
+ * @stack: monty lists pointer
+ * @line_number: times that line opcode happens
  */
-void _mod(stack_t **stock, unsigned int ligne_nombre)
+void _mod(stack_t **stack, unsigned int line_number)
 {
 	int mod = 0;
 
-	if (*stock == NULL || (*stock)->next == NULL)
+	if ((*stack)->n == 0)
 	{
-		fprintf(stderr, "L%u: can't mod, stock too short\n", ligne_nombre);
+		fprintf(stderr, "L%d: division by zero\n", line_number);
 		free(var_global.buffer);
 		fclose(var_global.file);
-		free_dlistint(*stock);
+		free_dlistint(*stack);
 		exit(EXIT_FAILURE);
 	}
-	else if ((*stock)->n == 0)
+	else if (*stack == 0 || (*stack)->next == 0)
 	{
-		fprintf(stderr, "L%d: division by zero\n", ligne_nombre);
-		free(var_global.buffer);
+		fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
 		fclose(var_global.file);
-		free_dlistint(*stock);
+		free(var_global.buffer);
 		exit(EXIT_FAILURE);
+		free_dlistint(*stack);
 	}
 	else
 	{
-		mod = (*stock)->n;
-		_pop(stock, ligne_nombre);
-		(*stock)->n %= mod;
+		mod = (*stack)->n;
+		_pop(stack, line_number);
+		(*stack)->n %= mod;
 	}
 }

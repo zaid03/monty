@@ -1,76 +1,79 @@
 #include "monty.h"
 
 /**
- * _pstr - mod top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _pstr - mod top and second top of stack
+ * @stack: monty stack's pointer into lists
+ * @line_number: times that opcode happens
  */
-void _pstr(stock_t **stock, unsigned int ligne_nombre)
+void _pstr(stack_t **stack, unsigned int line_number)
 {
-    stock_t *tmp = *stock;
-    int c = 0;
+	stack_t *tmp = *stack;
+	int char = 0;
 
-    (void)ligne_nombre;
+	(void)line_number;
 
-    while (tmp)
-    {
-        c = tmp->n;
-        if (c == 0 || _isalpha(c) == 0)
-            break;
-        putchar(c);
-        tmp = tmp->next;
-    }
-    putchar('\n');
+
+	while (tmp)
+	{
+		c = tmp->n;
+		if (char == 0 || _isalpha(char) == 0)
+			break;
+		putchar(char);
+		tmp = tmp->next;
+	}
+	putchar('\n');
 }
 
 /**
- * _rotl - mod top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _rotl - mod top and second top of stack
+ * @stack: monty stack's pointer into lists
+ * @line_number: times that opcode happens
  */
-void _rotl(stock_t **stock, unsigned int ligne_nombre)
+void _rotl(stack_t **stack, unsigned int line_number)
 {
-    stock_t *runner = *stock;
-    int aux1 = 0;
+	stack_t *runner = *stack;
 
-    if (!ligne_nombre || !stock || !*stock || !(*stock)->next)
-        return;
 
-    aux1 = runner->n;
+	int au1 = 0;
 
-    while (runner->next)
-    {
-        runner = runner->next;
-        runner->prev->n = runner->n;
-    }
+	if (!line_number || !stack || !*stack || !(*stack)->next)
+		return;
 
-    runner->n = aux1;
+	au1 = runner->n;
+
+	while (runner->next)
+	{
+		runner = runner->next;
+		runner->prev->n = runner->n;
+	}
+
+	runner->n = au1;
 }
 
 /**
- * _rotr - mod top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _rotr - mod top and second top of stack
+ * @stack: monty stack's pointer into lists
+ * @line_number: times that opcode happens
  */
-void _rotr(stock_t **stock, unsigned int ligne_nombre)
+void _rotr(stack_t **stack, unsigned int line_number)
 {
-    stock_t *runner = *stock;
-    int aux1 = 0;
+	stack_t *runner = *stack;
 
-    if (!ligne_nombre || !stock || !*stock || !(*stock)->next)
-        return;
+	int au1 = 0;
 
-    while (runner->next)
-        runner = runner->next;
+	if (!line_number || !stack || !*stack || !(*stack)->next)
+		return;
 
-    aux1 = runner->n;
+	while (runner->next)
+		runner = runner->next;
 
-    while (runner->prev)
-    {
-        runner = runner->prev;
-        runner->next->n = runner->n;
-    }
+	au1 = runner->n;
 
-    runner->n = aux1;
+	while (runner->prev)
+	{
+		runner = runner->prev;
+		runner->next->n = runner->n;
+	}
+
+	runner->n = au1;
 }
-

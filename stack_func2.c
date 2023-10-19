@@ -1,110 +1,114 @@
 #include "monty.h"
-
 /**
- * _swap - swap top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _swap - swap the top and second top of pointer
+ * @stack: monty stack's pointer
+ * @line_number: times opcode happens
  */
-void _swap(stock_t **stock, unsigned int ligne_nombre)
-{
-    stock_t *runner;
-    int tmp;
 
-    runner = *stock;
-    if (runner == NULL || runner->next == NULL)
-    {
-        fprintf(stderr, "L%d: can't swap, stock too short\n", ligne_nombre);
-        exit(EXIT_FAILURE);
-    }
-    tmp = runner->n;
-    runner->n = runner->next->n;
-    runner->next->n = tmp;
+void _swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *runner;
+	int tmp;
+
+	runner = *stack;
+	if (runner == 0 || runner->next == 0)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	tmp = runner->n;
+	runner->n = runner->next->n;
+	runner->next->n = tmp;
 }
 
 /**
- * _add - adding top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _add - add the top and second top of pointer
+ * @stack: monty stack's pointer
+ * @line_number: times opcode happens
  */
-void _add(stock_t **stock, unsigned int ligne_nombre)
+
+void _add(stack_t **stack, unsigned int line_number)
 {
-    stock_t *tmp = *stock;
-    int sum = 0, i = 0;
+	stack_t *tmp = *stack;
+	int sum = 0, i = 0;
 
-    if (tmp == NULL)
-    {
-        fprintf(stderr, "L%d: can't add, stock too short\n", ligne_nombre);
-        exit(EXIT_FAILURE);
-    }
+	if (tmp == 0)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 
-    while (tmp)
-    {
-        tmp = tmp->next;
-        i++;
-    }
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
 
-    if (stock == NULL || (*stock)->next == NULL || i <= 1)
-    {
-        fprintf(stderr, "L%d: can't add, stock too short\n", ligne_nombre);
-        exit(EXIT_FAILURE);
-    }
-    sum = (*stock)->next->n + (*stock)->n;
-    _pop(stock, ligne_nombre);
+	if (stack == 0 || (*stack)->next == 0 || i <= 1)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	sum = (*stack)->next->n + (*stack)->n;
+	_pop(stack, line_number);
 
-    (*stock)->n = sum;
+	(*stack)->n = sum;
 }
 
 /**
- * _nop - nop top of stock and second top
- * @stock: monty stock lists' pointer
- * @ligne_nombre: times the opcodes happens
+ * _nop - nop the top and second top of pointer
+ * @stack: monty stack's pointer
+ * @line_number: times opcode happens
  */
-void _zip(__attribute__ ((unused)) stock_t **stock, __attribute__ ((unused)) unsigned int ligne_nombre)
+
+void _nop(__attribute__ ((unused))stack_t **stack,
+		__attribute__ ((unused)) unsigned int line_number)
 {
-    ;
+	;
 }
 
 /**
- * _pchar - prints the ASCII table value of a number
- * @stock: pointer to the top of the stock
- * @ligne_nombre: times the opcodes happens
+ * _pchar - givesascii value for numbers
+ * @stack: top of stack's pointer
+ * @line_number: number of current line
+ *
  */
-void _pchar(stock_t **stock, unsigned int ligne_nombre)
+void _pchar(stack_t **stack, unsigned int line_number)
 {
-    int val;
+	int val;
 
-    if (stock == NULL || *stock == NULL)
-    {
-        fprintf(stderr, "L%d: can't pchar, stock empty\n", ligne_nombre);
-        free(var_global.buffer);
-        fclose(var_global.file);
-        free_dlistint(*stock);
-        exit(EXIT_FAILURE);
-    }
+	if (stack == 0 || *stack == 0)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
+		free(var_global.buffer);
+		fclose(var_global.file);
+		free_dlistint(*stack);
+		exit(EXIT_FAILURE);
+	}
 
-    val = (*stock)->n;
-    if (val > 127 || val < 0)
-    {
-        fprintf(stderr, "L%d: can't pchar, value out of range\n", ligne_nombre);
-        free(var_global.buffer);
-        fclose(var_global.file);
-        free_dlistint(*stock);
-        exit(EXIT_FAILURE);
-    }
+	val = (*stack)->n;
+	if (val > 127 || val < 0)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
+		free(var_global.buffer);
+		fclose(var_global.file);
+		free_dlistint(*stack);
+		exit(EXIT_FAILURE);
+	}
 
-    putchar(val);
-    putchar('\n');
+	putchar(val);
+	putchar('\n');
 }
 
 /**
- * _isalpha - checks if int is in alphabet
- * @c: int
+ * _isalpha - sees weather an int is an alphabet or not
+ * @char: int
  * Return: 1 if yes, 0 if no
  */
-int _isalpha(int c)
+int _isalpha(int char)
 {
-    if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
-        return (1);
-    else
-        return (0);
+	if ((char >= 97 && char <= 122) || (char >= 65 && char <= 90))
+		return (1);
+	else
+		return (0);
 }
