@@ -1,17 +1,17 @@
 #include "monty.h"
 /**
  * read_file - bytecode reading and cmds running
- * @filename: file path
- * @stock: top of the stack pointer
+ * @filename: pathname for file
+ * @stack: top of stack pointer
  */
-void read_file(char *filename, stock_t **stock)
+void read_file(char *filename, stack_t **stack)
 {
-	char *lignes;
+	char *line;
 	size_t i = 0;
-	int count_ligne = 1;
+	int line_count = 1;
 	instruct_func s;
-	int cheking;
-	int reading;
+	int check;
+	int read;
 
 
 	var_global.file = fopen(filename, "r");
@@ -22,35 +22,35 @@ void read_file(char *filename, stock_t **stock)
 		exit(EXIT_FAILURE);
 	}
 
-	while ((reading = getline(&var_global.buffer, &i, var_global.file)) != -1)
+	while ((read = getline(&var_global.buffer, &i, var_global.file)) != -1)
 	{
-		lignes = parse_line(var_global.buffer, stack, count_ligne);
-		if (lignes == NULL || lignes[0] == '#')
+		line = parse_line(var_global.buffer, stack, line_count);
+		if (line == NULL || line[0] == '#')
 		{
-			count_ligne++;
+			line_count++;
 			continue;
 		}
-		s = get_op_func(lignes);
+		s = get_op_func(line);
 		if (s == NULL)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", count_ligne, lignes);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_count, line);
 			exit(EXIT_FAILURE);
 		}
-		s(stack, count_ligne);
-		count_ligne++;
+		s(stack, line_count);
+		line_count++;
 	}
 	free(var_global.buffer);
-	cheking = fclose(var_global.file);
-	if (cheking == -1)
+	check = fclose(var_global.file);
+	if (check == -1)
 		exit(-1);
 }
 
 /**
- * get_op_function -  opcode cheking and returns the right function
+ * get_op_func - opcode cheking after that returning correct function
  * @str: opcode
- * Return: returns a functions or NULL when fails
+ * Return: returns functions or NULL when failing
  */
-instruct_func get_op_function(char *str)
+instruct_func get_op_func(char *str)
 {
 	int i;
 
@@ -83,11 +83,11 @@ instruct_func get_op_function(char *str)
 }
 
 /**
- * is_nombre - checks weathers strings are numbers
- * @str: string being passed
- * Return: returns 1 if string is a number else 0
+ * isnumber - to check weather a string is a number
+ * @str: string
+ * Return: returns 1 if string is a number or else 0
  */
-int is_nombre(char *str)
+int isnumber(char *str)
 {
 	unsigned int i;
 
@@ -109,23 +109,23 @@ int is_nombre(char *str)
 }
 
 /**
- * parse_line - parses a line for opcodes and arguments
- * @lina: the line to parse
- * @stack: head of the stack pointer
- * @ligne_nombre: the current line number
- * Return: returns opcode or null when fails
+ * parse_line - parses a line for an opcode and arguments
+ * @line: the line to be parsed
+ * @stack: top of stack pointer
+ * @line_number: line number
+ * Return: returns opcode or null if fails
  */
-char *parse_line(char *lina, stock_t **stock, unsigned int ligne_nombre)
+char *parse_line(char *line, stack_t **stack, unsigned int line_number)
 {
-	char *opcode, *push, *arg;
+	char *op_code, *push, *arg;
 	(void)stack;
 
 	push = "push";
-	opcode = strtok(lina, "\n ");
-	if (opcode == NULL)
+	op_code = strtok(line, "\n ");
+	if (op_code == NULL)
 		return (NULL);
 
-	if (strcmp(opcode, push) == 0)
+	if (strcmp(op_code, push) == 0)
 	{
 		arg = strtok(NULL, "\n ");
 		if (isnumber(arg) == 1 && arg != NULL)
@@ -134,9 +134,9 @@ char *parse_line(char *lina, stock_t **stock, unsigned int ligne_nombre)
 		}
 		else
 		{
-			fprintf(stderr, "L%d: usage: push integer\n", ligne_nombre);
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			exit(EXIT_FAILURE);
 		}
 	}
-	return (opcode);
+	return (op_code);
 }

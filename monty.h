@@ -11,79 +11,74 @@
 extern int push_arg;
 
 /**
- * struct stock_s - doubly linked list representation of a stock (or queue)
- * @n: integer
- * @prev: points to the previous element of the stock (or queue)
- * @next: points to the next element of the stock (or queue)
- * Description: doubly linked list node structure
- * for stock, queues, LIFO, FIFO Holberton project
+ * struct stack_s - doubly linked list represantative of a stack
+ * @n: int
+ * @prev: to point to previous element of stack
+ * @next: to point to next element of stack
+ * Description: node structure of doubly linked lsit
  */
-typedef struct stock_s
+typedef struct stack_s
 {
-    int n;
-    struct stock_s *prev;
-    struct stock_s *next;
-} stock_t;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
+} stack_t;
 
 /**
- * struct instruction_s - opcoode and its function
- * @opcode: the opcode
- * @f: function to handle the opcode
- * Description: opcode and its function
- * for stock, queues, LIFO, FIFO Holberton project
+ * struct instruction_s - function of opcode
+ * @opcode: opcode
+ * @f: function of opcode
  */
 typedef struct instruction_s
 {
-    char *opcode;
-    void (*f)(stock_t **stock, unsigned int ligne_nombre);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
- * struct global_variable - opcoode and its function
- * @file: the opcode
- * @push_arg: function to handle the opcode
- * @buffer: pointer to
- * Description: opcode and its function
- * for stock, queues, LIFO, FIFO Holberton project
+ * struct global_variable - function of opcode
+ * @file: opcode
+ * @push_arg: opcode's function handling
+ * @buffer: pointer
  */
 typedef struct global_variable
 {
-    FILE *file;
-    int push_arg;
-    char *buffer;
+	FILE *file;
+	int push_arg;
+	char *buffer;
 } global_var;
 
 extern global_var var_global;
 
-void read_file(char *filename, stock_t **stock);
-char *parse_line(char *line, stock_t **stock, unsigned int ligne_nombre);
-typedef void (*instruct_func)(stock_t **stock, unsigned int ligne_nombre);
+void read_file(char *filename, stack_t **stack);
+char *parse_line(char *line, stack_t **stack, unsigned int line_number);
+typedef void (*instruct_func)(stack_t **stack, unsigned int line_number);
 instruct_func get_op_func(char *str);
 
 /*Fuxntions Monty*/
-void _pall(stock_t **stock, unsigned int ligne_nombre);
-void _push(stock_t **stock, unsigned int ligne_nombre);
-void _pint(stock_t **stock, unsigned int ligne_nombre);
-void _pop(stock_t **stock, unsigned int ligne_nombre);
-void _swap(stock_t **stock, unsigned int ligne_nombre);
-void _nop(stock_t **stock, unsigned int ligne_nombre);
-void _rotl(stock_t **stock, unsigned int ligne_nombre);
-void _rotr(stock_t **stock, unsigned int ligne_nombre);
+void _pall(stack_t **stack, unsigned int line_number);
+void _push(stack_t **stack, unsigned int line_number);
+void _pint(stack_t **stack, unsigned int line_number);
+void _pop(stack_t **stack, unsigned int line_number);
+void _swap(stack_t **stack, unsigned int line_number);
+void _nop(stack_t **stack, unsigned int line_number);
+void _rotl(stack_t **stack, unsigned int line_number);
+void _rotr(stack_t **stack, unsigned int line_number);
 
 /*Functions string ascci */
-void _pchar(stock_t **stock, unsigned int ligne_nombre);
-void _pstr(stock_t **stock, unsigned int ligne_nombre);
+void _pchar(stack_t **stack, unsigned int line_number);
+void _pstr(stack_t **stack, unsigned int line_number);
 
 /*Functions math*/
-void _sub(stock_t **stock, unsigned int ligne_nombre);
-void _add(stock_t **stock, unsigned int ligne_nombre);
-void _mul(stock_t **stock, unsigned int ligne_nombre);
-void _div(stock_t **stock, unsigned int ligne_nombre);
-void _mod(stock_t **stock, unsigned int ligne_nombre);
+void _sub(stack_t **stack, unsigned int line_number);
+void _add(stack_t **stack, unsigned int line_number);
+void _mul(stack_t **stack, unsigned int line_number);
+void _div(stack_t **stack, unsigned int line_number);
+void _mod(stack_t **stack, unsigned int line_number);
 
 /*Utility functions*/
-void free_dlistint(stock_t *head);
-void dobfree(stock_t **stock);
-void dobfree2(stock_t **stock);
+void free_dlistint(stack_t *head);
+void dobfree(stack_t **stack);
+void dobfree2(stack_t **stack);
 int _isalpha(int c);
 #endif
