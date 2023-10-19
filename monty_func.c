@@ -2,13 +2,13 @@
 /**
  * read_file - bytecode reading and cmds running
  * @filename: file path
- * @stack: top of the stack pointer
+ * @stock: top of the stack pointer
  */
-void read_file(char *filename, stack_t **stack)
+void read_file(char *filename, stock_t **stock)
 {
 	char *lignes;
 	size_t i = 0;
-	int line_count = 1;
+	int count_ligne = 1;
 	instruct_func s;
 	int cheking;
 	int reading;
@@ -24,20 +24,20 @@ void read_file(char *filename, stack_t **stack)
 
 	while ((reading = getline(&var_global.buffer, &i, var_global.file)) != -1)
 	{
-		lignes = parse_line(var_global.buffer, stack, count_lines);
+		lignes = parse_line(var_global.buffer, stack, count_ligne);
 		if (lignes == NULL || lignes[0] == '#')
 		{
-			count_lines++;
+			count_ligne++;
 			continue;
 		}
 		s = get_op_func(lignes);
 		if (s == NULL)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", count_lines, lignes);
+			fprintf(stderr, "L%d: unknown instruction %s\n", count_ligne, lignes);
 			exit(EXIT_FAILURE);
 		}
-		s(stack, count_lines);
-		count_lines++;
+		s(stack, count_ligne);
+		count_ligne++;
 	}
 	free(var_global.buffer);
 	cheking = fclose(var_global.file);
@@ -83,11 +83,11 @@ instruct_func get_op_function(char *str)
 }
 
 /**
- * nombre - checks weathers strings are numbers
+ * is_nombre - checks weathers strings are numbers
  * @str: string being passed
  * Return: returns 1 if string is a number else 0
  */
-int nombre(char *str)
+int is_nombre(char *str)
 {
 	unsigned int i;
 
@@ -109,13 +109,13 @@ int nombre(char *str)
 }
 
 /**
- * parse_lignes - parses a line for opcodes and arguments
+ * parse_line - parses a line for opcodes and arguments
  * @lina: the line to parse
  * @stack: head of the stack pointer
  * @ligne_nombre: the current line number
  * Return: returns opcode or null when fails
  */
-char *parse_lignes(char *lina, stack_t **stack, unsigned int ligne_nombre)
+char *parse_line(char *lina, stock_t **stock, unsigned int ligne_nombre)
 {
 	char *opcode, *push, *arg;
 	(void)stack;

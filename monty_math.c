@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * _subrine - subrine top stack and second top
+ * _sub - subrine top stack and second top
  * @stock: monty stack's pointer to lists
  * @line_number: number of line opcode occurs on
  */
-void _subrine(stock_t **stock, unsigned int ligne_nombre)
+void _sub(stock_t **stock, unsigned int ligne_nombre)
 {
 	stock_t *tmp = *stock;
 	int subrine = 0, i = 0;
@@ -34,11 +34,11 @@ void _subrine(stock_t **stock, unsigned int ligne_nombre)
 }
 
 /**
- * _mule - mule top stack and second top
+ * _mul - mule top stack and second top
  * @stock: monty stack's pointer to lists
  * @ligne_nombre: number of line opcode occurs on
  */
-void _mule(stock_t **stock, unsigned int ligne_nombre)
+void _mul(stock_t **stock, unsigned int ligne_nombre)
 {
 	int aux;
 
