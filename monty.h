@@ -11,11 +11,12 @@
 extern int push_arg;
 
 /**
- * struct stack_s - doubly linked list represantative of a stack
- * @n: int
- * @prev: to point to previous element of stack
- * @next: to point to next element of stack
- * Description: node structure of doubly linked lsit
+ * struct stack_s - doubly linked list representation of a stack (or queue)
+ * @n: integer
+ * @prev: points to the previous element of the stack (or queue)
+ * @next: points to the next element of the stack (or queue)
+ * Description: doubly linked list node structure
+ * for stack, queues, LIFO, FIFO Holberton project
  */
 typedef struct stack_s
 {
@@ -25,9 +26,11 @@ typedef struct stack_s
 } stack_t;
 
 /**
- * struct instruction_s - function of opcode
- * @opcode: opcode
- * @f: function of opcode
+ * struct instruction_s - opcoode and its function
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO Holberton project
  */
 typedef struct instruction_s
 {
@@ -36,10 +39,12 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct global_variable - function of opcode
- * @file: opcode
- * @push_arg: opcode's function handling
- * @buffer: pointer
+ * struct global_variable - opcoode and its function
+ * @file: the opcode
+ * @push_arg: function to handle the opcode
+ * @buffer: pointer to
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO Holberton project
  */
 typedef struct global_variable
 {
